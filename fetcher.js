@@ -10,13 +10,24 @@ const localPath = args[1]
 //upon completion, it should print out a message
 
 request(url, (error, response, body) => {
-  console.log('error:', error); // Print the error if one occurred
+  
+  
   fs.writeFile(localPath, body, err => {
     if (err) {
       console.log(err)
+      return;
     }
-  })
+    fs.stat(localPath, (err, stats) => { //get file size in bytes
+      if (err) {
+        console.log(err)
+        return;
+      }
+      console.log(`Downloaded and saved ${stats.size} bytes to ${localPath}`)
+    });
+  });
+
+
+
 
   //print out message to terminal
-  //console.log(`Downloaded and saved ${data} bytes to ${localPath}`)
 });
